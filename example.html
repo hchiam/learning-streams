@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stream example</title>
+  </head>
+  <body>
+    <script>
+      (async function () {
+        const readableStream = new ReadableStream({
+          start(controller) {
+            controller.enqueue(1);
+            controller.enqueue(2);
+            controller.enqueue(3);
+            controller.close();
+          },
+        });
+
+        const writableStream = new WritableStream();
+
+        await readableStream.pipeTo(writableStream);
+
+        console.log("Piping has finished");
+      })();
+    </script>
+  </body>
+</html>
